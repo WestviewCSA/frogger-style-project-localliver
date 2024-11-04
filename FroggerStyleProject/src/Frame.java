@@ -22,26 +22,57 @@ import javax.swing.Timer;
 
 public class Frame extends JPanel implements ActionListener, MouseListener, KeyListener {
 	
+	public static boolean debugging = true;
+	
 	//Timer related variables
 	int waveTimer = 5; //each wave of enemies is 20s
 	long ellapseTime = 0;
 	Font timeFont = new Font("Courier", Font.BOLD, 70);
 	int level = 0;
+	//making the objects
 	
+	everythingBagel bagel = new everythingBagel();
+	googlyRock gRock = new googlyRock(265, 25);
+	Rock rock2 = new Rock(150, 25);
+	GooglyEye eye = new GooglyEye();
 	
 	Font myFont = new Font("Courier", Font.BOLD, 40);
 	SimpleAudioPlayer backgroundMusic = new SimpleAudioPlayer("scifi.wav", false);
 //	Music soundBang = new Music("bang.wav", false);
 //	Music soundHaha = new Music("haha.wav", false);
 	
+	// a row of bagelscrolling objects
+	everythingBagelScroller[] row1  = new everythingBagelScroller[10];
+	//a row of finger logs
+	FingerRightScroller[] rowRight = new FingerRightScroller[9];
+	
+	
+	
 	//frame width/height
-	int width = 600;
-	int height = 600;	
+	static int width = 596;
+	static int height = 600;	
 	
 
 	public void paint(Graphics g) {
 		super.paintComponent(g);
-
+		//where to paint the objects
+		bagel.paint(g);
+		rock2.paint(g);
+		gRock.paint(g);
+		eye.paint(g);
+		
+		
+		//paint the row1 objects
+		//for each obj in row1 paint
+		for(everythingBagelScroller obj : row1) {
+			obj.paint(g);
+			
+		}
+		for(FingerRightScroller obj : rowRight) {
+			obj.paint(g);
+			
+		}
+		
 	}
 	
 	public static void main(String[] arg) {
@@ -57,10 +88,24 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 		f.setResizable(false);
  		f.addMouseListener(this);
 		f.addKeyListener(this);
-	
-		backgroundMusic.play();
+		
+		//backgroundMusic.play();
 
-	
+		/*
+		 * Setup any 1D array here! - create the objects that go in there
+		 */
+		
+		for(int i = 0; i < row1.length; i++) {
+			row1[i] = new everythingBagelScroller(i*100-250, 150, (int) (Math.random()*5)-1);
+			
+		}
+		for(int i = 0; i < rowRight.length; i++) {
+			rowRight[i] = new FingerRightScroller(i*300-250, 300, (int) (Math.random()*5)-1);
+			
+			
+		}
+		
+		
 		
 		//the cursor image must be outside of the src folder
 		//you will need to import a couple of classes to make it fully 
@@ -118,7 +163,22 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 	public void keyPressed(KeyEvent arg0) {
 		// TODO Auto-generated method stub
 		System.out.println(arg0.getKeyCode());
-		
+		if(arg0.getKeyCode() == 87) {
+			rock2.vy=-10;
+			rock2.vx=0;
+		}
+		if(arg0.getKeyCode() == 83) {
+			rock2.vy=10;
+			rock2.vx=0;
+		}
+		if(arg0.getKeyCode() == 68) {
+			rock2.vx=10;
+			rock2.vy=0;
+		}
+		if(arg0.getKeyCode() == 65) {
+			rock2.vx=-10;
+			rock2.vy=0;
+		}
 		
 		
 	}
@@ -126,7 +186,22 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 	@Override
 	public void keyReleased(KeyEvent arg0) {
 		// TODO Auto-generated method stub
-		
+		if(arg0.getKeyCode() == 87) {
+			rock2.vy=0;
+			
+		}
+		if(arg0.getKeyCode() == 83) {
+			rock2.vy=0;
+			
+		}
+		if(arg0.getKeyCode() == 68) {
+			rock2.vx=0;
+			
+		}
+		if(arg0.getKeyCode() == 65) {
+			rock2.vx=0;
+			
+		}
 	}
 
 	@Override
