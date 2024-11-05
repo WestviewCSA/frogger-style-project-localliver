@@ -64,13 +64,37 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 		
 		//paint the row1 objects
 		//for each obj in row1 paint
-		for(everythingBagelScroller obj : row1) {
+		/*for(everythingBagelScroller obj : row1) {
 			obj.paint(g);
 			
-		}
-		for(FingerRightScroller obj : rowRight) {
-			obj.paint(g);
-			
+		}*/
+		for(int i = 0; i < rowRight.length; i++) {
+			if(rowRight[i].x >= 600) {
+				FingerRightScroller j;
+				if(i == 0) {
+					j = rowRight[8];
+				}else {
+					j = rowRight[i-1];
+				}
+				
+				switch(j.type) {
+				case 0:
+					rowRight[i].type = 1;
+					
+				case 1:
+					rowRight[i].type = 2;
+					
+				case 2: 
+					rowRight[i].type = 3;
+					break;
+					
+				case 3: 
+					rowRight[i].type = 0;
+					
+				}
+				
+				
+			}
 		}
 		
 	}
@@ -99,10 +123,11 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 			row1[i] = new everythingBagelScroller(i*100-250, 150, (int) (Math.random()*5)-1);
 			
 		}
-		for(int i = 0; i < rowRight.length; i++) {
-			rowRight[i] = new FingerRightScroller(i*300-250, 300, (int) (Math.random()*5)-1);
-			
-			
+		for(int i = 0; i < rowRight.length; i+=3) {
+			int random = (int) (Math.random()*5)-1;
+			rowRight[i] = new FingerRightScroller(i*100-250, 300, random, 1);
+			rowRight[i+1] = new FingerRightScroller(i*100-320, 300, random, 2);
+			rowRight[i+2] = new FingerRightScroller(i*100-390, 300, random, 3);
 		}
 		
 		
