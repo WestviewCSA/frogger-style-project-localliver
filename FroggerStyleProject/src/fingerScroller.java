@@ -7,7 +7,7 @@ import java.awt.Toolkit;
 import java.awt.geom.AffineTransform;
 import java.net.URL;
 
-public class everythingBagelScroller{
+public class fingerScroller{
 	private Image forward;//, backward, left, right; 	
 	private AffineTransform tx;
 	
@@ -15,22 +15,22 @@ public class everythingBagelScroller{
 	int width, height;
 	int x, y;						//position of the object
 	int vx, vy;						//movement variables
-	double scaleWidth = 1.25;		//change to scale image
-	double scaleHeight = 1.25; 		//change to scale image
+	double scaleWidth = 1.00;		//change to scale image
+	double scaleHeight = 1.00; 		//change to scale image
 	int type;
 	
-	public everythingBagelScroller() {
-		forward 	= getImage("/imgs/"+"everythingBagel.png"); //load the image for Tree
+	public fingerScroller() {
+		forward 	= getImage("/imgs/"+"finger.png"); //load the image for Tree
 		/*backward 	= getImage("/imgs/"+"backward.png"); //load the image for Tree
 		left 		= getImage("/imgs/"+"left.png"); //load the image for Tree
 		right 		= getImage("/imgs/"+"right.png"); //load the image for Tree
 		*/
 		//alter these
-		width = (int)(49*scaleWidth);
-		height = (int)(49*scaleHeight);
+		width = (int)(120*scaleWidth);
+		height = (int)(36*scaleHeight);
 		
 		//top-left lopation of your image
-		x=-width; //off screen for now
+		x=-360; //off screen for now
 		y = 300;
 		
 		vx = 5;
@@ -59,7 +59,7 @@ public class everythingBagelScroller{
 	}
 	
 	//2nd constructor - allow setting x and y during construction
-		public everythingBagelScroller(int x, int y, int type) {
+		public fingerScroller(int x, int y, int type) {
 			
 			//call the default constructor for all normal stuff
 			this(); //invokes default constructor
@@ -80,16 +80,16 @@ public class everythingBagelScroller{
 		y+=vy;	
 		
 		//for infinite scrolling tp to the other side once it leaves the other side\
-		if(x>750) {
-			x=-250;
-			type = (int) (Math.random()*2);
+		if(x>720) {
+			x=-360;
+			type = (int) (Math.random()*5)-1;
 		}
 		
 		init(x,y);
 		if(type == 0) {
 			forward= getImage("/imgs/" + "none.png");
 		}else {
-			forward 	= getImage("/imgs/"+"everythingBagel.png");
+			forward 	= getImage("/imgs/"+"finger.png");
 			if(Frame.debugging) {
 				//draw hitbox only if debugging
 				g.setColor(Color.red);
@@ -111,7 +111,7 @@ public class everythingBagelScroller{
 	private Image getImage(String path) {
 		Image tempImage = null;
 		try {
-			URL imageURL = everythingBagelScroller.class.getResource(path);
+			URL imageURL = fingerScroller.class.getResource(path);
 	 		tempImage = Toolkit.getDefaultToolkit().getImage(imageURL);
 		} catch (Exception e) {
 			e.printStackTrace();

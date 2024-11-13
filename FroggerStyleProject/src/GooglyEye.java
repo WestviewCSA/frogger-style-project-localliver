@@ -14,8 +14,8 @@ public class GooglyEye{
 	int width, height;
 	int x, y;						//position of the object
 	int vx, vy;						//movement variables
-	double scaleWidth = 1.5;		//change to scale image
-	double scaleHeight = 1.5; 		//change to scale image
+	double scaleWidth = 1.0;		//change to scale image
+	double scaleHeight = 1.0; 		//change to scale image
 
 	public GooglyEye() {
 		forward 	= getImage("/imgs/"+"googlyEye.png"); //load the image for Tree
@@ -24,7 +24,7 @@ public class GooglyEye{
 		//alter these
 		width = (int)(35*scaleWidth);
 		height = (int)(35*scaleHeight);
-		x = 75;
+		x = 10;
 		y = 10;
 		vx = 0;
 		vy = 0;

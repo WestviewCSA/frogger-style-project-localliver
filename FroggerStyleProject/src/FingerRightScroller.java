@@ -8,22 +8,22 @@ import java.net.URL;
 
 
 public class FingerRightScroller{
-	private Image left, middle, right, blank;//, backward, left, right; 	
+	private Image forward, left, middle, right, blank;//, backward, left, right; 	
 	private AffineTransform tx;
 	
 	int dir = 0; 					//0-forward, 1-backward, 2-left, 3-right
 	int width, height;
 	int x, y;						//position of the object
 	int vx, vy;						//movement variables
-	double scaleWidth = 0.9;		//change to scale image
-	double scaleHeight = 0.9; 		//change to scale image
+	double scaleWidth = 0.8;		//change to scale image
+	double scaleHeight = 0.8; 		//change to scale image
 	int type;
 	
 	
 	public FingerRightScroller() {
 		right 	= getImage("/imgs/"+"endFingerRight.png");
 		middle 	= getImage("/imgs/"+"midFingerRight.png");
-		left 	= getImage("/imgs/"+"endFingerRight.png");
+		left 	= getImage("/imgs/"+"startFingerRight.png");
 		blank 	= getImage("/imgs/"+"none.png");//load the image for Tree
 		/*backward 	= getImage("/imgs/"+"backward.png"); //load the image for Tree
 		left 		= getImage("/imgs/"+"left.png"); //load the image for Tree
@@ -71,7 +71,7 @@ public class FingerRightScroller{
 		//for infinite scrolling tp to the other side once it leaves the other side\
 		if(x>750) {
 			x=-250;
-			type = (int) (Math.random()*2);
+			
 		}
 		
 		init(x,y);
@@ -82,7 +82,7 @@ public class FingerRightScroller{
 		}else {
 			right 	= getImage("/imgs/"+"endFingerRight.png");
 			middle 	= getImage("/imgs/"+"midFingerRight.png");
-			left 	= getImage("/imgs/"+"endFingerRight.png");
+			left 	= getImage("/imgs/"+"startFingerRight.png");
 			if(Frame.debugging) {
 				//draw hitbox only if debugging
 				g.setColor(Color.red);
@@ -90,8 +90,22 @@ public class FingerRightScroller{
 			}
 		}
 		
+			switch(type) {
+			case 0:
+				forward = blank;
+				break;
+			case 1:
+				forward = right;
+				break;
+			case 2:
+				forward = middle;
+				break;
+			case 3:
+				forward = left;
+				break;
+			}
 			
-		
+			g2.drawImage(forward, tx, null);
 		
 		
 	}
