@@ -2,6 +2,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.geom.AffineTransform;
 import java.net.URL;
@@ -15,8 +16,10 @@ public class GooglyEye{
 	int x, y;						//position of the object
 	int vx, vy;						//movement variables
 	double scaleWidth = 1.0;		//change to scale image
-	double scaleHeight = 1.0; 		//change to scale image
-
+	double scaleHeight = 1.0; //change to scale image
+	boolean isCollected = false;
+	String img = "googlyEye.png";
+	
 	public GooglyEye() {
 		forward 	= getImage("/imgs/"+"googlyEye.png"); //load the image for Tree
 		
@@ -35,6 +38,32 @@ public class GooglyEye{
 									//use your variables
 		
 	}
+	
+	public GooglyEye(int x, int y) {
+		
+		//call the default constructor for all normal stuff
+		this(); //invokes default constructor
+		
+		//do the specific task for this constructor
+		this.x = x;
+		this.y = y;
+		
+		
+	}
+	public boolean collided(Rock character) {
+		
+		//represent eachj object as a rectange
+		//then check if they are interesecting
+		Rectangle main = new Rectangle(character.getX(),character.getY(),character.getWidth(),character.getHeight());
+		
+		Rectangle thisObject = new Rectangle(x,y,width,height);
+		if(!isCollected) {
+			return main.intersects(thisObject);
+		}
+		return false;
+		
+		
+	}
 
 	public void paint(Graphics g) {
 		//these are the 2 lines of code needed draw an image on the screen
@@ -44,6 +73,7 @@ public class GooglyEye{
 		y+=vy;	
 		
 		init(x,y);
+		forward = getImage("/imgs/"+img);
 		g2.drawImage(forward, tx, null);
 		if(Frame.debugging) {
 			//draw hitbox only if debugging

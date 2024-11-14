@@ -49,6 +49,7 @@ public class Rock{
 		this.y = y;
 		
 	}
+	
 
 	//getters!!!
 	public int getX() {
@@ -68,6 +69,9 @@ public class Rock{
 	public void setImg(String newImgUrl) {
 		forward = getImage("/imgs/"+newImgUrl);
 	}
+	public void setVx(int vx) {
+		this.vx = vx;
+	}
 	
 	public void paint(Graphics g) {
 		//these are the 2 lines of code needed draw an image on the screen
@@ -75,7 +79,22 @@ public class Rock{
 		
 		x+=vx;
 		y+=vy;	
-		
+		if(x>600) {
+			x=350;
+			y=530;
+		}
+		if(x<0) {
+			x=350;
+			y=530;
+		}
+		if(y<0) {
+			x=350;
+			y=530;
+		}
+		if(y>600) {
+			x=350;
+			y=530;
+		}
 		init(x,y);
 		g2.drawImage(forward, tx, null);
 		

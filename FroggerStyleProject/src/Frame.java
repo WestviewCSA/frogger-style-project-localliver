@@ -31,10 +31,10 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 	int level = 0;
 	//making the objects
 	
-	everythingBagel bagel = new everythingBagel();
+	
 	googlyRock gRock = new googlyRock(265, 25);
 	Rock rock2 = new Rock(350, 530);
-	GooglyEye eye = new GooglyEye();
+	
 	Background cliff = new Background();
 	Font myFont = new Font("Courier", Font.BOLD, 40);
 	SimpleAudioPlayer backgroundMusic = new SimpleAudioPlayer("scifi.wav", false);
@@ -46,8 +46,8 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 	//a row of finger logs
 	fingerScroller[] fingerRow = new fingerScroller[9];
 	fingerScroller[] fingerRow2 = new fingerScroller[9];
-	
-	
+	fingerScroller[] fingerRow3 = new fingerScroller[9];
+	GooglyEye[] eyes = new GooglyEye[8];
 	//frame width/height
 	static int width = 596;
 	static int height = 620;	
@@ -57,11 +57,7 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 		super.paintComponent(g);
 		//where to paint the objects
 		cliff.paint(g);
-		bagel.paint(g);
 		
-		gRock.paint(g);
-		eye.paint(g);
-		rock2.paint(g);
 		
 		
 		
@@ -80,16 +76,67 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 			obj.paint(g);
 			
 		}
+		for(fingerScroller obj: fingerRow3) {
+			
+			obj.paint(g);
+			
+		}
+		for(GooglyEye obj: eyes) {
+			
+			obj.paint(g);
+		
+		}
+		//collision
+		rock2.paint(g);
 		for(everythingBagelScroller obj : row1) {
 			if(obj.collided(rock2) && obj.type !=0) {
-				rock2.x = 300;
-				rock2.y = 550;
+				rock2.x = 350;
+				rock2.y = 530;
 			}
 		}
+		for(GooglyEye obj : eyes) {
+			if(obj.collided(rock2)) {
+				rock2.x = 350;
+				rock2.y = 530;
+				obj.img = "googlyRock.png";
+				obj.scaleWidth = 0.75;
+				obj.scaleHeight = 0.75;
+				obj.x-=10;
+				obj.y-=5;
+			}
+		}
+		boolean riding = false;
+		for(fingerScroller obj : fingerRow) {
+			if(obj.collided(rock2)) {
+				rock2.setVx(obj.getVx());
+				riding = true;
+				break;
+			}
+		}
+		for(fingerScroller obj : fingerRow2) {
+			if(obj.collided(rock2)) {
+				rock2.setVx(obj.getVx());
+				riding = true;
+				break;
+			}
+		}
+		for(fingerScroller obj : fingerRow3) {
+			if(obj.collided(rock2)) {
+				rock2.setVx(obj.getVx());
+				riding = true;
+				break;
+			}
+		}
+		if(!riding&&(rock2.getY() > 110&&rock2.getY()<210) ) {
+			riding = false;
+			rock2.setVx(0);
+			rock2.x =350;
+			rock2.y=550;
+		}else if (!riding) {
+			rock2.setVx(0);
+		}
 		
-		/*for(FingerRightScroller i : rowRight) {
-			i.paint(g);
-		}*/
+		
 	}
 	
 	public static void main(String[] arg) {
@@ -118,13 +165,21 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 		}
 		for(int i = 0; i < fingerRow.length; i++) {
 			
-			fingerRow[i] = new fingerScroller(i*180-180, 210, (int) (Math.random()*5)-1);
+			fingerRow[i] = new fingerScroller(i*180-180, 210, 10, "finger.png",(int) (Math.random()*5)-1);
 		}
 		for(int i = 0; i < fingerRow2.length; i++) {
 			
-			fingerRow2[i] = new fingerScroller(i*180-180, 110, (int) (Math.random()*5)-1);
+			fingerRow2[i] = new fingerScroller(i*180-180, 110,8, "finger.png",(int) (Math.random()*5)-1);
 		}
-		
+		for(int i = 0; i < fingerRow3.length; i++) {
+			
+			fingerRow3[i] = new fingerScroller(750-i*180, 160,-12, "fingerLeft.png", (int) (Math.random()*2)-1);
+		}
+		for(int i = 0; i < eyes.length; i++) {
+			eyes[i] = new GooglyEye(20+i*75, 30);
+			
+		}
+	
 		
 		
 		//the cursor image must be outside of the src folder
@@ -184,21 +239,21 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 		// TODO Auto-generated method stub
 		System.out.println(arg0.getKeyCode());
 		if(arg0.getKeyCode() == 87) {
-			rock2.vy=-5;
-			rock2.vx=0;
+			rock2.vy=-7;
+			
 			
 		}
 		if(arg0.getKeyCode() == 83) {
-			rock2.vy=5;
-			rock2.vx=0;
+			rock2.vy=7;
+			
 		
 		}
 		if(arg0.getKeyCode() == 68) {
-			rock2.vx=5;
+			rock2.vx=7;
 			rock2.vy=0;
 		}
 		if(arg0.getKeyCode() == 65) {
-			rock2.vx=-5;
+			rock2.vx=-7;
 			rock2.vy=0;
 		}
 		
