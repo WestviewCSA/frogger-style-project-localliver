@@ -13,11 +13,11 @@ public class Background{
 	int width, height;
 	int x, y;						//position of the object
 	int vx, vy;						//movement variables
-	double scaleWidth = 2.0;		//change to scale image
-	double scaleHeight = 2.0; 		//change to scale image
+	double scaleWidth = 4.00;		//change to scale image
+	double scaleHeight = 4.00; 		//change to scale image
 
 	public Background() {
-		forward 	= getImage("/imgs/"+"cliff.png"); //load the image for Tree
+		forward 	= getImage("/imgs/"+"background.png"); //load the image for Tree
 		/*backward 	= getImage("/imgs/"+"backward.png"); //load the image for Tree
 		left 		= getImage("/imgs/"+"left.png"); //load the image for Tree
 		right 		= getImage("/imgs/"+"right.png"); //load the image for Tree

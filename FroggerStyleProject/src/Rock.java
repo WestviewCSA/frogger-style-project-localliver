@@ -26,8 +26,8 @@ public class Rock{
 		//alter these
 		width = (int) (1320*scaleWidth);
 		height = (int) (1200*scaleHeight);
-		x = 0;
-		y = 10;
+		x = 350;
+		y = 550;
 		vx = 0;
 		vy = 0;
 		

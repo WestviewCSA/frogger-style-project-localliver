@@ -33,7 +33,7 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 	
 	everythingBagel bagel = new everythingBagel();
 	googlyRock gRock = new googlyRock(265, 25);
-	Rock rock2 = new Rock(150, 25);
+	Rock rock2 = new Rock(350, 530);
 	GooglyEye eye = new GooglyEye();
 	Background cliff = new Background();
 	Font myFont = new Font("Courier", Font.BOLD, 40);
@@ -45,12 +45,12 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 	everythingBagelScroller[] row1  = new everythingBagelScroller[10];
 	//a row of finger logs
 	fingerScroller[] fingerRow = new fingerScroller[9];
-	
+	fingerScroller[] fingerRow2 = new fingerScroller[9];
 	
 	
 	//frame width/height
-	static int width = 646;
-	static int height = 688;	
+	static int width = 596;
+	static int height = 620;	
 	
 
 	public void paint(Graphics g) {
@@ -63,19 +63,7 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 		eye.paint(g);
 		rock2.paint(g);
 		
-		g.drawLine(0, 50, 650, 50);
-		g.drawLine(0, 100, 650, 100);
-		g.drawLine(0, 150, 650, 150);
-		g.drawLine(0, 200, 650, 200);
-		g.drawLine(0, 250, 650, 250);
-		g.drawLine(0, 300, 650, 300);
-		g.drawLine(0, 350, 650, 350);
-		g.drawLine(0, 400, 650, 400);
-		g.drawLine(0, 450, 650, 450);
-		g.drawLine(0, 500, 650, 500);
-		g.drawLine(0, 550, 650, 550);
-		g.drawLine(0, 600, 650, 600);
-		g.drawLine(0, 650, 650, 650);
+		
 		
 		//paint the row1 objects
 		//for each obj in row1 paint
@@ -87,6 +75,11 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 				obj.paint(g);
 				
 			}
+		
+		for(fingerScroller obj: fingerRow2) {
+			obj.paint(g);
+			
+		}
 		for(everythingBagelScroller obj : row1) {
 			if(obj.collided(rock2) && obj.type !=0) {
 				rock2.x = 300;
@@ -120,12 +113,16 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 		 */
 		
 		for(int i = 0; i < row1.length; i++) {
-			row1[i] = new everythingBagelScroller(i*100-250, 150, (int) (Math.random()*5)-1);
+			row1[i] = new everythingBagelScroller(i*100-250, 400, (int) (Math.random()*5)-1);
 			
 		}
 		for(int i = 0; i < fingerRow.length; i++) {
 			
-			fingerRow[i] = new fingerScroller(i*180-180, 300, (int) (Math.random()*5)-1);
+			fingerRow[i] = new fingerScroller(i*180-180, 210, (int) (Math.random()*5)-1);
+		}
+		for(int i = 0; i < fingerRow2.length; i++) {
+			
+			fingerRow2[i] = new fingerScroller(i*180-180, 110, (int) (Math.random()*5)-1);
 		}
 		
 		
@@ -187,21 +184,21 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 		// TODO Auto-generated method stub
 		System.out.println(arg0.getKeyCode());
 		if(arg0.getKeyCode() == 87) {
-			rock2.vy=-10;
+			rock2.vy=-5;
 			rock2.vx=0;
 			
 		}
 		if(arg0.getKeyCode() == 83) {
-			rock2.vy=10;
+			rock2.vy=5;
 			rock2.vx=0;
 		
 		}
 		if(arg0.getKeyCode() == 68) {
-			rock2.vx=10;
+			rock2.vx=5;
 			rock2.vy=0;
 		}
 		if(arg0.getKeyCode() == 65) {
-			rock2.vx=-10;
+			rock2.vx=-5;
 			rock2.vy=0;
 		}
 		

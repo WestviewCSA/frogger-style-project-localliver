@@ -15,8 +15,8 @@ public class fingerScroller{
 	int width, height;
 	int x, y;						//position of the object
 	int vx, vy;						//movement variables
-	double scaleWidth = 1.00;		//change to scale image
-	double scaleHeight = 1.00; 		//change to scale image
+	double scaleWidth = 1.50;		//change to scale image
+	double scaleHeight = 1.50; 		//change to scale image
 	int type;
 	
 	public fingerScroller() {
