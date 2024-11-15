@@ -46,7 +46,7 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 	//a row of finger logs
 	fingerScroller[] fingerRow = new fingerScroller[9];
 	fingerScroller[] fingerRow2 = new fingerScroller[9];
-	fingerScroller[] fingerRow3 = new fingerScroller[9];
+	fingerScroller[] fingerRow3 = new fingerScroller[8];
 	GooglyEye[] eyes = new GooglyEye[8];
 	//frame width/height
 	static int width = 596;
@@ -94,8 +94,9 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 				rock2.y = 530;
 			}
 		}
+		int count = 0;
 		for(GooglyEye obj : eyes) {
-			if(obj.collided(rock2)) {
+			if(obj.collided(rock2)&&!obj.isCollected) {
 				rock2.x = 350;
 				rock2.y = 530;
 				obj.img = "googlyRock.png";
@@ -103,25 +104,29 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 				obj.scaleHeight = 0.75;
 				obj.x-=10;
 				obj.y-=5;
+				count ++;
+			}
+			if(count == eyes.length) {
+				obj.img = "googlyEye.png";
 			}
 		}
 		boolean riding = false;
 		for(fingerScroller obj : fingerRow) {
-			if(obj.collided(rock2)) {
+			if(obj.collided(rock2)&&obj.type!=0) {
 				rock2.setVx(obj.getVx());
 				riding = true;
 				break;
 			}
 		}
 		for(fingerScroller obj : fingerRow2) {
-			if(obj.collided(rock2)) {
+			if(obj.collided(rock2)&&obj.type!=0) {
 				rock2.setVx(obj.getVx());
 				riding = true;
 				break;
 			}
 		}
 		for(fingerScroller obj : fingerRow3) {
-			if(obj.collided(rock2)) {
+			if(obj.collided(rock2)&&obj.type!=0) {
 				rock2.setVx(obj.getVx());
 				riding = true;
 				break;
@@ -250,11 +255,11 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 		}
 		if(arg0.getKeyCode() == 68) {
 			rock2.vx=7;
-			rock2.vy=0;
+			
 		}
 		if(arg0.getKeyCode() == 65) {
 			rock2.vx=-7;
-			rock2.vy=0;
+			
 		}
 		
 		
