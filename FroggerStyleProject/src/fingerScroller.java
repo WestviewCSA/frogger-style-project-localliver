@@ -102,7 +102,7 @@ public class fingerScroller{
 		if(type == 0) {
 			img  = "none.png";
 		}else {
-			
+			img = "finger.png";
 			if(Frame.debugging) {
 				//draw hitbox only if debugging
 				g.setColor(Color.red);

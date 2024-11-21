@@ -19,7 +19,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.Timer;
-
+import java.util.ArrayList;
 public class Frame extends JPanel implements ActionListener, MouseListener, KeyListener {
 	
 	public static boolean debugging = true;
@@ -32,7 +32,7 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 	//making the objects
 	
 	
-	googlyRock gRock = new googlyRock(265, 25);
+	
 	Rock rock2 = new Rock(350, 530);
 	
 	Background cliff = new Background();
@@ -47,7 +47,8 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 	fingerScroller[] fingerRow = new fingerScroller[9];
 	fingerScroller[] fingerRow2 = new fingerScroller[9];
 	fingerScroller[] fingerRow3 = new fingerScroller[8];
-	GooglyEye[] eyes = new GooglyEye[8];
+	ArrayList<GooglyEye> eyes = new ArrayList<GooglyEye>();
+	ArrayList<googlyRock> googlyRock = new ArrayList<googlyRock>();
 	//frame width/height
 	static int width = 596;
 	static int height = 620;	
@@ -86,6 +87,11 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 			obj.paint(g);
 		
 		}
+		for(googlyRock obj: googlyRock) {
+			
+			obj.paint(g);
+		
+		}
 		//collision
 		rock2.paint(g);
 		for(everythingBagelScroller obj : row1) {
@@ -94,21 +100,18 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 				rock2.y = 530;
 			}
 		}
-		int count = 0;
+		int tempx;
+		int tempy;
 		for(GooglyEye obj : eyes) {
 			if(obj.collided(rock2)&&!obj.isCollected) {
+				tempx = obj.x;
+				tempy = obj.y;
+				eyes.remove(obj);
+				googlyRock.add(new googlyRock(tempx-5, tempy));
 				rock2.x = 350;
 				rock2.y = 530;
-				obj.img = "googlyRock.png";
-				obj.scaleWidth = 0.75;
-				obj.scaleHeight = 0.75;
-				obj.x-=10;
-				obj.y-=5;
-				count ++;
 			}
-			if(count == eyes.length) {
-				obj.img = "googlyEye.png";
-			}
+			
 		}
 		boolean riding = false;
 		for(fingerScroller obj : fingerRow) {
@@ -180,11 +183,11 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 			
 			fingerRow3[i] = new fingerScroller(750-i*180, 160,-12, "fingerLeft.png", (int) (Math.random()*2)-1);
 		}
-		for(int i = 0; i < eyes.length; i++) {
-			eyes[i] = new GooglyEye(20+i*75, 30);
+		while(eyes.size()<8) {
+			eyes.add(new GooglyEye(eyes.size()*75+10,25));
 			
 		}
-	
+		
 		
 		
 		//the cursor image must be outside of the src folder
