@@ -173,15 +173,15 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 		}
 		for(int i = 0; i < fingerRow.length; i++) {
 			
-			fingerRow[i] = new fingerScroller(i*180-180, 210, 10, "finger.png",(int) (Math.random()*5)-1);
+			fingerRow[i] = new fingerScroller(i*180-180, 210, 10, "finger.png",(int) (Math.random()*3)-1);
 		}
 		for(int i = 0; i < fingerRow2.length; i++) {
 			
-			fingerRow2[i] = new fingerScroller(i*180-180, 110,8, "finger.png",(int) (Math.random()*5)-1);
+			fingerRow2[i] = new fingerScroller(i*180-180, 110,8, "finger.png",(int) (Math.random()*3)-1);
 		}
 		for(int i = 0; i < fingerRow3.length; i++) {
 			
-			fingerRow3[i] = new fingerScroller(750-i*180, 160,-12, "fingerLeft.png", (int) (Math.random()*2)-1);
+			fingerRow3[i] = new fingerScroller(750-i*180, 160,-12, "fingerLeft.png", (int) (Math.random()*3)-1);
 		}
 		while(eyes.size()<8) {
 			eyes.add(new GooglyEye(eyes.size()*75+10,25));

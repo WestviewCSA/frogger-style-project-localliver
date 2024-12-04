@@ -91,11 +91,11 @@ public class fingerScroller{
 		//for infinite scrolling tp to the other side once it leaves the other side\
 		if(x>720) {
 			x=-360;
-			type = (int) (Math.random()*5)-1;
+			type = (int) (Math.random()*3)-1;
 		}
 		if(x<-540) {
 			x=720;
-			type=(int)(Math.random()*5)-1;
+			type=(int)(Math.random()*2)-1;
 		}
 		
 		init(x,y);
