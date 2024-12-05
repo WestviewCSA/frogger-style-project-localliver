@@ -19,6 +19,7 @@ public class fingerScroller{
 	double scaleHeight = 1.25; 		//change to scale image
 	int type;
 	String img = "finger.png";
+	private boolean isRight = true;
 	
 	public fingerScroller() {
 		forward 	= getImage("/imgs/"+"finger.png");//load the image for Tree
@@ -55,14 +56,14 @@ public class fingerScroller{
 		Rectangle main = new Rectangle(character.getX(),character.getY(),character.getWidth(),character.getHeight());
 		Rectangle thisObject = new Rectangle(0, 0, 0, 0);
 		if(type!=0) {
-			thisObject = new Rectangle(x,y,width,height);
+			thisObject = new Rectangle(x,y,width,height-30);
 		}
 		return main.intersects(thisObject);
 		
 	}
 	
 	//2nd constructor - allow setting x and y during construction
-		public fingerScroller(int x, int y, int vx, String img, int type) {
+		public fingerScroller(int x, int y, int vx, String img, int type, boolean isRight) {
 			
 			//call the default constructor for all normal stuff
 			this(); //invokes default constructor
@@ -73,6 +74,7 @@ public class fingerScroller{
 			this.type = type;
 			this.vx=vx;
 			this.img = img;
+			this.isRight =isRight;
 			
 			
 		}
@@ -101,8 +103,15 @@ public class fingerScroller{
 		init(x,y);
 		if(type == 0) {
 			img  = "none.png";
-		}else {
+		}else if(isRight){
 			img = "finger.png";
+			if(Frame.debugging) {
+				//draw hitbox only if debugging
+				g.setColor(Color.red);
+				g.drawRect(x, y, width, height);
+			}
+		}else {
+			img = "fingerLeft.png";
 			if(Frame.debugging) {
 				//draw hitbox only if debugging
 				g.setColor(Color.red);

@@ -44,9 +44,9 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 	// a row of bagelscrolling objects
 	everythingBagelScroller[] row1  = new everythingBagelScroller[10];
 	//a row of finger logs
-	fingerScroller[] fingerRow = new fingerScroller[9];
-	fingerScroller[] fingerRow2 = new fingerScroller[9];
-	fingerScroller[] fingerRow3 = new fingerScroller[8];
+	fingerScroller[] fingerRow = new fingerScroller[5];
+	fingerScroller[] fingerRow2 = new fingerScroller[5];
+	fingerScroller[] fingerRow3 = new fingerScroller[5];
 	ArrayList<GooglyEye> eyes = new ArrayList<GooglyEye>();
 	ArrayList<googlyRock> googlyRock = new ArrayList<googlyRock>();
 	//frame width/height
@@ -173,15 +173,15 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 		}
 		for(int i = 0; i < fingerRow.length; i++) {
 			
-			fingerRow[i] = new fingerScroller(i*180-180, 210, 10, "finger.png",(int) (Math.random()*3)-1);
+			fingerRow[i] = new fingerScroller(i*330-180, 210, 4, "finger.png",(int) (Math.random()*5)-1, true);
 		}
 		for(int i = 0; i < fingerRow2.length; i++) {
 			
-			fingerRow2[i] = new fingerScroller(i*180-180, 110,8, "finger.png",(int) (Math.random()*3)-1);
+			fingerRow2[i] = new fingerScroller(i*330-180, 110,3, "finger.png",(int) (Math.random()*5)-1, true);
 		}
 		for(int i = 0; i < fingerRow3.length; i++) {
 			
-			fingerRow3[i] = new fingerScroller(750-i*180, 160,-12, "fingerLeft.png", (int) (Math.random()*3)-1);
+			fingerRow3[i] = new fingerScroller(780-i*330, 160,-5, "fingerLeft.png", (int) (Math.random()*5)-1, false);
 		}
 		while(eyes.size()<8) {
 			eyes.add(new GooglyEye(eyes.size()*75+10,25));
@@ -247,21 +247,21 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 		// TODO Auto-generated method stub
 		System.out.println(arg0.getKeyCode());
 		if(arg0.getKeyCode() == 87) {
-			rock2.vy=-7;
+			rock2.vy=-5;
 			
 			
 		}
 		if(arg0.getKeyCode() == 83) {
-			rock2.vy=7;
+			rock2.vy=5;
 			
 		
 		}
 		if(arg0.getKeyCode() == 68) {
-			rock2.vx=7;
+			rock2.vx=5;
 			
 		}
 		if(arg0.getKeyCode() == 65) {
-			rock2.vx=-7;
+			rock2.vx=-5;
 			
 		}
 		
