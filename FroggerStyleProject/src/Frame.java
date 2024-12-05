@@ -27,16 +27,22 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 	//Timer related variables
 	int waveTimer = 5; //each wave of enemies is 20s
 	long ellapseTime = 0;
-	Font timeFont = new Font("Courier", Font.BOLD, 70);
+	Font timeFont = new Font("Courier", Font.BOLD, 100);
 	int level = 0;
-	//making the objects
+	//score and lives variables 
+	int score = 0;
+	int lives = 0;
+	boolean didStart = false;
 	
-	
-	
+	//making the rock object
 	Rock rock2 = new Rock(350, 530);
-	
+	//background sprites
 	Background cliff = new Background();
-	Font myFont = new Font("Courier", Font.BOLD, 40);
+	Death death = new Death();
+	Start start = new Start();
+	Victory victory = new Victory();
+	
+	Font myFont = new Font("Courier", Font.BOLD, 20);
 	SimpleAudioPlayer backgroundMusic = new SimpleAudioPlayer("scifi.wav", false);
 //	Music soundBang = new Music("bang.wav", false);
 //	Music soundHaha = new Music("haha.wav", false);
@@ -47,6 +53,7 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 	fingerScroller[] fingerRow = new fingerScroller[5];
 	fingerScroller[] fingerRow2 = new fingerScroller[5];
 	fingerScroller[] fingerRow3 = new fingerScroller[5];
+	//a row of the googlyeyes (what you grab) and a row of googlyRocks (showing you collected them)
 	ArrayList<GooglyEye> eyes = new ArrayList<GooglyEye>();
 	ArrayList<googlyRock> googlyRock = new ArrayList<googlyRock>();
 	//frame width/height
@@ -59,11 +66,16 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 		//where to paint the objects
 		cliff.paint(g);
 		
-		
-		
+		//making text
+		g.setFont(myFont);
+		g.drawString("Score: " + score, 10, 30);
+		g.drawString("Lives: " + lives, 500, 30);
 		
 		//paint the row1 objects
 		//for each obj in row1 paint
+		if(didStart) {
+			start.paint(g);
+		}
 		for(everythingBagelScroller obj : row1) {
 			obj.paint(g);
 			
@@ -92,12 +104,23 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 			obj.paint(g);
 		
 		}
+		rock2.paint(g);//rock painted last so over everyhting
+		//painting end/start screens
+		if(lives == 0) {
+			death.paint(g);
+		}
+		if (score == 8) {
+			victory.paint(g);
+		}
+		
 		//collision
-		rock2.paint(g);
+		
 		for(everythingBagelScroller obj : row1) {
 			if(obj.collided(rock2) && obj.type !=0) {
 				rock2.x = 350;
 				rock2.y = 530;
+				lives--;
+				System.out.println(lives);
 			}
 		}
 		int tempx;
@@ -110,6 +133,7 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 				googlyRock.add(new googlyRock(tempx-5, tempy));
 				rock2.x = 350;
 				rock2.y = 530;
+				score++;
 			}
 			
 		}
@@ -140,6 +164,8 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 			rock2.setVx(0);
 			rock2.x =350;
 			rock2.y=550;
+			lives--;
+			System.out.println(lives);
 		}else if (!riding) {
 			rock2.setVx(0);
 		}
@@ -264,8 +290,11 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 			rock2.vx=-5;
 			
 		}
-		
-		
+		if(arg0.getKeyCode() == 32) {
+			score = 0;
+			lives = 3;
+			didStart = true;
+		}
 	}
 
 	@Override

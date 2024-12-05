@@ -33,7 +33,7 @@ public class everythingBagelScroller{
 		x=-width; //off screen for now
 		y = 300;
 		
-		vx = 5;
+		vx = 3;
 		vy = 0;
 		
 		tx = AffineTransform.getTranslateInstance(0, 0);
