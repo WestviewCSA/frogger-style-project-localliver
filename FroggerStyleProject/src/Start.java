@@ -11,11 +11,11 @@ public class Start{
 	
 						//0-forward, 1-backward, 2-left, 3-right
 	int width, height;
-	double scaleWidth = 4.00;		//change to scale image
-	double scaleHeight = 4.00; 		//change to scale image
+	double scaleWidth = 0.50;		//change to scale image
+	double scaleHeight = 0.50; 		//change to scale image
 
 	public Start() {
-		forward 	= getImage("/imgs/"+"background.png"); //load the image for Tree
+		forward 	= getImage("/imgs/"+"start.png"); //load the image for Tree
 		/*backward 	= getImage("/imgs/"+"backward.png"); //load the image for Tree
 		left 		= getImage("/imgs/"+"left.png"); //load the image for Tree
 		right 		= getImage("/imgs/"+"right.png"); //load the image for Tree

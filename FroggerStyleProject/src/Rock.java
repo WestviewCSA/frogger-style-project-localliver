@@ -79,13 +79,15 @@ public class Rock{
 		
 		x+=vx;
 		y+=vy;	
-		if(x>600) {
+		if(x>586) {
 			x=350;
 			y=530;
+			Frame.subtractLives();
 		}
-		if(x<0) {
+		if(x<-50) {
 			x=350;
 			y=530;
+			Frame.subtractLives();
 		}
 		if(y<0) {
 			x=350;

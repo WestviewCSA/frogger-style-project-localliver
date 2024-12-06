@@ -138,5 +138,7 @@ public class SimpleAudioPlayer   {
         clip.loop(Clip.LOOP_CONTINUOUSLY); 
     } 
 	
-
+    public void resetTime() {
+    	clip.setMicrosecondPosition(0);
+    }
 }

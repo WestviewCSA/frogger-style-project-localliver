@@ -15,7 +15,7 @@ public class Death{
 	double scaleHeight = 1.00; 		//change to scale image
 
 	public Death() {
-		forward 	= getImage("/imgs/"+"death.png"); //load the image for Tree
+		forward 	= getImage("/imgs/"+"deatht.png"); //load the image for Tree
 		/*backward 	= getImage("/imgs/"+"backward.png"); //load the image for Tree
 		left 		= getImage("/imgs/"+"left.png"); //load the image for Tree
 		right 		= getImage("/imgs/"+"right.png"); //load the image for Tree

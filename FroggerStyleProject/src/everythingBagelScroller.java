@@ -59,7 +59,7 @@ public class everythingBagelScroller{
 	}
 	
 	//2nd constructor - allow setting x and y during construction
-		public everythingBagelScroller(int x, int y, int type) {
+		public everythingBagelScroller(int x, int y, int type, int vx) {
 			
 			//call the default constructor for all normal stuff
 			this(); //invokes default constructor
@@ -68,6 +68,7 @@ public class everythingBagelScroller{
 			this.x = x;
 			this.y = y;
 			this.type = type;
+			this.vx=vx;
 			
 			
 		}
@@ -83,6 +84,10 @@ public class everythingBagelScroller{
 		if(x>750) {
 			x=-250;
 			type = (int) (Math.random()*2);
+		}
+		if(x<-300) {
+			x=700;
+			type=(int)(Math.random()*2);
 		}
 		
 		init(x,y);

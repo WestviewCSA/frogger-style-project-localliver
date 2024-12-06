@@ -22,7 +22,7 @@ import javax.swing.Timer;
 import java.util.ArrayList;
 public class Frame extends JPanel implements ActionListener, MouseListener, KeyListener {
 	
-	public static boolean debugging = true;
+	public static boolean debugging = false;
 	
 	//Timer related variables
 	int waveTimer = 5; //each wave of enemies is 20s
@@ -30,9 +30,13 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 	Font timeFont = new Font("Courier", Font.BOLD, 100);
 	int level = 0;
 	//score and lives variables 
-	int score = 0;
-	int lives = 0;
+	int score = 7;
+	static int lives = 3;
 	boolean didStart = false;
+	boolean died = false;
+	
+	SimpleAudioPlayer overMusic = null;
+	SimpleAudioPlayer victoryMusic = null;
 	
 	//making the rock object
 	Rock rock2 = new Rock(350, 530);
@@ -43,12 +47,19 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 	Victory victory = new Victory();
 	
 	Font myFont = new Font("Courier", Font.BOLD, 20);
-	SimpleAudioPlayer backgroundMusic = new SimpleAudioPlayer("scifi.wav", false);
-//	Music soundBang = new Music("bang.wav", false);
+	Font bigFont = new Font("Courier", Font.BOLD, 50);
+	//background_music
+	SimpleAudioPlayer backgroundMusic = new SimpleAudioPlayer("background_music.wav", true);
+	
+	
+	
+	
+//  Music soundBang = new Music("bang.wav", false);
 //	Music soundHaha = new Music("haha.wav", false);
 	
 	// a row of bagelscrolling objects
 	everythingBagelScroller[] row1  = new everythingBagelScroller[10];
+	everythingBagelScroller[] row2  = new everythingBagelScroller[10];
 	//a row of finger logs
 	fingerScroller[] fingerRow = new fingerScroller[5];
 	fingerScroller[] fingerRow2 = new fingerScroller[5];
@@ -60,23 +71,32 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 	static int width = 596;
 	static int height = 620;	
 	
+	public static void subtractLives() {
+		lives--;
+	}
 
+	
 	public void paint(Graphics g) {
 		super.paintComponent(g);
 		//where to paint the objects
-		cliff.paint(g);
+		
 		
 		//making text
 		g.setFont(myFont);
-		g.drawString("Score: " + score, 10, 30);
-		g.drawString("Lives: " + lives, 500, 30);
+		
 		
 		//paint the row1 objects
 		//for each obj in row1 paint
+		
 		if(didStart) {
-			start.paint(g);
+			cliff.paint(g);
+			
 		}
 		for(everythingBagelScroller obj : row1) {
+			obj.paint(g);
+			
+		}
+		for(everythingBagelScroller obj : row2) {
 			obj.paint(g);
 			
 		}
@@ -104,13 +124,49 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 			obj.paint(g);
 		
 		}
-		rock2.paint(g);//rock painted last so over everyhting
+		rock2.paint(g);
+		g.setColor(Color.white);
+		g.fillRect(10, 540, 80, 25);
+		g.fillRect(500, 540, 75, 25);
+		g.setColor(Color.black);
+		g.drawString("Score: " + score, 10, 560);
+		g.drawString("Lives: " + lives, 500, 560);
+		//rock painted last so over everyhting
 		//painting end/start screens
-		if(lives == 0) {
+		g.setFont(bigFont);	
+		if(lives <= 0) {
 			death.paint(g);
+			died=true;
+			g.drawString("Sucked... into a bagel", 40, 100);
+			g.drawString("Press space to restart", 35, 540);
+			
+			if(overMusic==null) {
+				overMusic=new SimpleAudioPlayer("bagel.wav", false);
+				overMusic.play();
+				
+			}
+			
 		}
-		if (score == 8) {
+		
+		if (score >= 8) {
 			victory.paint(g);
+			g.setColor(Color.black);
+			g.drawString("In another life, I would", 10, 80);
+			g.drawString("have really liked doing", 10, 130);
+			g.drawString("laundry and taxes...", 10, 180);
+			g.drawString("Press space to restart", 40, 500);
+			if(victoryMusic==null) {
+				victoryMusic=new SimpleAudioPlayer("laundry.wav", false);
+				victoryMusic.play();
+			}
+		}
+		
+		if(!didStart) {
+			start.paint(g);
+			g.setColor(Color.black);
+			g.drawString("Everything, Everywhere", 15, 80);
+			g.drawString("All at Once Frogger", 45, 160);
+			g.drawString("Press space to start", 50, 490);
 		}
 		
 		//collision
@@ -120,7 +176,18 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 				rock2.x = 350;
 				rock2.y = 530;
 				lives--;
-				System.out.println(lives);
+				
+				new SimpleAudioPlayer("bonk.wav",false).play();
+				
+			}
+		}
+		for(everythingBagelScroller obj : row2) {
+			if(obj.collided(rock2) && obj.type !=0) {
+				rock2.x = 350;
+				rock2.y = 530;
+				lives--;
+				new SimpleAudioPlayer("bonk.wav",false).play();
+				
 			}
 		}
 		int tempx;
@@ -130,10 +197,11 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 				tempx = obj.x;
 				tempy = obj.y;
 				eyes.remove(obj);
-				googlyRock.add(new googlyRock(tempx-5, tempy));
+				googlyRock.add(new googlyRock(tempx-5, tempy-7));
 				rock2.x = 350;
 				rock2.y = 530;
 				score++;
+				new SimpleAudioPlayer("victor.wav", false).play();
 			}
 			
 		}
@@ -159,13 +227,14 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 				break;
 			}
 		}
-		if(!riding&&(rock2.getY() > 110&&rock2.getY()<210) ) {
+		if(!riding&&(rock2.getY() > 85&&rock2.getY()<185) ) {
 			riding = false;
 			rock2.setVx(0);
 			rock2.x =350;
-			rock2.y=550;
+			rock2.y=530;
 			lives--;
-			System.out.println(lives);
+			new SimpleAudioPlayer("clothes.wav", false).play();
+			
 		}else if (!riding) {
 			rock2.setVx(0);
 		}
@@ -187,27 +256,32 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
  		f.addMouseListener(this);
 		f.addKeyListener(this);
 		
-		//backgroundMusic.play();
+		backgroundMusic.play();
+		
 
 		/*
 		 * Setup any 1D array here! - create the objects that go in there
 		 */
 		
 		for(int i = 0; i < row1.length; i++) {
-			row1[i] = new everythingBagelScroller(i*100-250, 400, (int) (Math.random()*5)-1);
+			row1[i] = new everythingBagelScroller(i*100-250, 370, (int) (Math.random()*5)-1, -2);
+			
+		}
+		for(int i = 0; i < row2.length; i++) {
+			row2[i] = new everythingBagelScroller(i*100-250, 430, (int) (Math.random()*5)-1, 3);
 			
 		}
 		for(int i = 0; i < fingerRow.length; i++) {
 			
-			fingerRow[i] = new fingerScroller(i*330-180, 210, 4, "finger.png",(int) (Math.random()*5)-1, true);
+			fingerRow[i] = new fingerScroller(i*330-180, 180, 4, "finger.png",(int) (Math.random()*5)-1, true);
 		}
 		for(int i = 0; i < fingerRow2.length; i++) {
 			
-			fingerRow2[i] = new fingerScroller(i*330-180, 110,3, "finger.png",(int) (Math.random()*5)-1, true);
+			fingerRow2[i] = new fingerScroller(i*330-180, 80,3, "finger.png",(int) (Math.random()*5)-1, true);
 		}
 		for(int i = 0; i < fingerRow3.length; i++) {
 			
-			fingerRow3[i] = new fingerScroller(780-i*330, 160,-5, "fingerLeft.png", (int) (Math.random()*5)-1, false);
+			fingerRow3[i] = new fingerScroller(780-i*330, 130,-5, "fingerLeft.png", (int) (Math.random()*5)-1, false);
 		}
 		while(eyes.size()<8) {
 			eyes.add(new GooglyEye(eyes.size()*75+10,25));
@@ -291,12 +365,35 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 			
 		}
 		if(arg0.getKeyCode() == 32) {
-			score = 0;
-			lives = 3;
-			didStart = true;
+			if(!didStart) {
+				score = 7;
+				lives = 3;
+				rock2.x =350;
+				rock2.y=530;
+				didStart = true;
+			}
+			if(died) {
+				score = 0;
+				lives=3;
+				rock2.x =350;
+				rock2.y=530;
+				died=false;
+				overMusic.pause();
+				overMusic=null;
+			}
+			if(score>=8) {
+				score = 0;
+				lives = 3;
+				rock2.x=350;
+				rock2.y=530;
+				victoryMusic.pause();
+				victoryMusic=null;
+			}
 		}
 	}
 
+	
+	
 	@Override
 	public void keyReleased(KeyEvent arg0) {
 		// TODO Auto-generated method stub
