@@ -30,7 +30,7 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 	Font timeFont = new Font("Courier", Font.BOLD, 100);
 	int level = 0;
 	//score and lives variables 
-	int score = 7;
+	int score = 0;
 	static int lives = 3;
 	boolean didStart = false;
 	boolean died = false;
@@ -147,23 +147,27 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 			}
 			
 		}
-		
+		//victory screen
 		if (score >= 8) {
 			victory.paint(g);
 			g.setColor(Color.black);
 			g.drawString("In another life, I would", 10, 80);
 			g.drawString("have really liked doing", 10, 130);
 			g.drawString("laundry and taxes...", 10, 180);
-			g.drawString("Press space to restart", 40, 500);
+			
+			g.drawString("Press space to restart", 40, 510);
+			g.setFont(myFont);
+			g.drawString("(you won)", 50, 460);
 			if(victoryMusic==null) {
 				victoryMusic=new SimpleAudioPlayer("laundry.wav", false);
 				victoryMusic.play();
 			}
 		}
-		
+		//start screen
 		if(!didStart) {
 			start.paint(g);
 			g.setColor(Color.black);
+			g.setFont(bigFont);
 			g.drawString("Everything, Everywhere", 15, 80);
 			g.drawString("All at Once Frogger", 45, 160);
 			g.drawString("Press space to start", 50, 490);
@@ -190,6 +194,8 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 				
 			}
 		}
+		//when colliding with the googlyeyes, that specific googlyeye 
+		//is removed and replaced with a googlyRock
 		int tempx;
 		int tempy;
 		for(GooglyEye obj : eyes) {
@@ -205,6 +211,7 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 			}
 			
 		}
+		//log collision/riding death things
 		boolean riding = false;
 		for(fingerScroller obj : fingerRow) {
 			if(obj.collided(rock2)&&obj.type!=0) {
@@ -260,7 +267,7 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 		
 
 		/*
-		 * Setup any 1D array here! - create the objects that go in there
+		 * Setting up the arrays and arrayLists
 		 */
 		
 		for(int i = 0; i < row1.length; i++) {
@@ -345,7 +352,8 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 	@Override
 	public void keyPressed(KeyEvent arg0) {
 		// TODO Auto-generated method stub
-		System.out.println(arg0.getKeyCode());
+		
+		//movement
 		if(arg0.getKeyCode() == 87) {
 			rock2.vy=-5;
 			
@@ -365,8 +373,10 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 			
 		}
 		if(arg0.getKeyCode() == 32) {
+		//if statements so the game doesn't always reset when pressing space
 			if(!didStart) {
-				score = 7;
+			//set everything back to normal in all if-statements
+				score = 0;
 				lives = 3;
 				rock2.x =350;
 				rock2.y=530;
@@ -378,6 +388,7 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 				rock2.x =350;
 				rock2.y=530;
 				died=false;
+				//making music only play once
 				overMusic.pause();
 				overMusic=null;
 			}
@@ -386,6 +397,7 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 				lives = 3;
 				rock2.x=350;
 				rock2.y=530;
+				//making music only play once
 				victoryMusic.pause();
 				victoryMusic=null;
 			}

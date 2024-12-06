@@ -17,7 +17,7 @@ public class everythingBagelScroller{
 	int vx, vy;						//movement variables
 	double scaleWidth = 1.25;		//change to scale image
 	double scaleHeight = 1.25; 		//change to scale image
-	int type;
+	int type; //this variable is so that the everything bagel can "disappear" bc i used a random number, and not a pattern
 	
 	public everythingBagelScroller() {
 		forward 	= getImage("/imgs/"+"everythingBagel.png"); //load the image for Tree

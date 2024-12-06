@@ -18,8 +18,8 @@ public class fingerScroller{
 	double scaleWidth = 1.25;		//change to scale image
 	double scaleHeight = 1.25; 		//change to scale image
 	int type;
-	String img = "finger.png";
-	private boolean isRight = true;
+	String img = "finger.png"; //used to figure out if its i should use the none sprite, right sprite, or left sprite
+	private boolean isRight = true;//tells if its facing right or left
 	
 	public fingerScroller() {
 		forward 	= getImage("/imgs/"+"finger.png");//load the image for Tree
