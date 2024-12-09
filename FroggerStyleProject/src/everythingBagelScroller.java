@@ -83,11 +83,11 @@ public class everythingBagelScroller{
 		//for infinite scrolling tp to the other side once it leaves the other side\
 		if(x>750) {
 			x=-250;
-			type = (int) (Math.random()*2);
+			type = (int) (Math.random()*3);
 		}
 		if(x<-300) {
 			x=700;
-			type=(int)(Math.random()*2);
+			type=(int)(Math.random()*3);
 		}
 		
 		init(x,y);

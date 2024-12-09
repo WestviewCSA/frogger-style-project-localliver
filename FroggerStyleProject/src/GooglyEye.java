@@ -56,7 +56,7 @@ public class GooglyEye{
 		//then check if they are interesecting
 		Rectangle main = new Rectangle(character.getX(),character.getY(),character.getWidth(),character.getHeight());
 		
-		Rectangle thisObject = new Rectangle(x,y,width,height);
+		Rectangle thisObject = new Rectangle(x,y,width,height-20);
 		if(!isCollected) {
 			return main.intersects(thisObject);
 		}
